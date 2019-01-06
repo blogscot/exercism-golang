@@ -7,12 +7,7 @@ import (
 )
 
 func containsLetter(letters string) bool {
-	for _, letter := range letters {
-		if unicode.IsLetter(letter) {
-			return true
-		}
-	}
-	return false
+	return strings.IndexFunc(letters, unicode.IsLetter) >= 0
 }
 
 func isShouting(remark string) bool {
@@ -26,7 +21,7 @@ func Hey(remark string) string {
 
 	isShouting := isShouting(remark)
 	isQuestion := strings.HasSuffix(remark, "?")
-	isBlank := len(remark) == 0
+	isSilent := len(remark) == 0
 
 	switch {
 	case isShouting && isQuestion:
@@ -35,7 +30,7 @@ func Hey(remark string) string {
 		return "Whoa, chill out!"
 	case isQuestion:
 		return "Sure."
-	case isBlank:
+	case isSilent:
 		return "Fine. Be that way!"
 	default:
 		return "Whatever."
