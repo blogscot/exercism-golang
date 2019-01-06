@@ -6,6 +6,14 @@ import (
 	"unicode"
 )
 
+const (
+	calm     = "Calm down, I know what I'm doing!"
+	whoa     = "Whoa, chill out!"
+	sure     = "Sure."
+	fine     = "Fine. Be that way!"
+	whatever = "Whatever."
+)
+
 func containsLetter(letters string) bool {
 	return strings.IndexFunc(letters, unicode.IsLetter) >= 0
 }
@@ -25,15 +33,15 @@ func Hey(remark string) string {
 
 	switch {
 	case isShouting && isQuestion:
-		return "Calm down, I know what I'm doing!"
+		return calm
 	case isShouting:
-		return "Whoa, chill out!"
+		return whoa
 	case isQuestion:
-		return "Sure."
+		return sure
 	case isSilent:
-		return "Fine. Be that way!"
+		return fine
 	default:
-		return "Whatever."
+		return whatever
 	}
 
 }
