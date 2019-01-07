@@ -4,11 +4,13 @@ import (
 	"strings"
 )
 
-var scaleWithSharps = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
-var scaleWithFlats = []string{"F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E"}
-var useSharps = []string{
-	"C", "G", "D", "A", "E", "B", "F# major", "a", "e", "b", "f#", "c#", "g#", "d# minor",
-}
+var (
+	scaleWithSharps = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
+	scaleWithFlats  = []string{"F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E"}
+	useSharps       = []string{
+		"C", "G", "D", "A", "E", "B", "F# major", "a", "e", "b", "f#", "c#", "g#", "d# minor",
+	}
+)
 
 type myScale []string
 
@@ -66,9 +68,5 @@ func (scale myScale) remove(pos int, amount int) []string {
 }
 
 func toUpper(tonic string) string {
-	newTonic := strings.ToUpper(string(tonic[0]))
-	if len(tonic) > 1 {
-		newTonic += string(tonic[1])
-	}
-	return newTonic
+	return strings.ToUpper(tonic[:1]) + string(tonic[1:])
 }
