@@ -5,11 +5,8 @@ import (
 )
 
 var (
-	scaleWithSharps = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
-	scaleWithFlats  = []string{"F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E"}
-	useSharps       = []string{
-		"C", "G", "D", "A", "E", "B", "F# major", "a", "e", "b", "f#", "c#", "g#", "d# minor",
-	}
+	sharps = []string{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"}
+	flats  = []string{"F", "Gb", "G", "Ab", "A", "Bb", "B", "C", "Db", "D", "Eb", "E"}
 )
 
 type myScale []string
@@ -44,12 +41,12 @@ func (scale myScale) applyInterval(interval string) []string {
 }
 
 func getScale(tonic string) []string {
-	for _, v := range useSharps {
-		if v == tonic {
-			return scaleWithSharps
-		}
+	chromatic := sharps
+	switch tonic {
+	case "F", "Bb", "Eb", "Ab", "Db", "Gb", "d", "g", "c", "f", "bb", "eb":
+		chromatic = flats
 	}
-	return scaleWithFlats
+	return chromatic
 }
 
 func (scale myScale) findTonic(tonic string) int {
