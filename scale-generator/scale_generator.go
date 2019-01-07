@@ -14,7 +14,7 @@ type myScale []string
 // Scale generates a musical scale starting with the tonic
 // and following the specified interval pattern
 func Scale(tonic, interval string) []string {
-	return myScale(buildScale(tonic)).applyInterval(interval)
+	return myScale(buildScale(tonic)).apply(interval)
 }
 
 func buildScale(tonic string) []string {
@@ -26,7 +26,7 @@ func buildScale(tonic string) []string {
 	return append(newScale, scale[:start]...)
 }
 
-func (scale myScale) applyInterval(interval string) []string {
+func (scale myScale) apply(interval string) []string {
 	position := 1
 	for _, step := range interval {
 		switch step {
