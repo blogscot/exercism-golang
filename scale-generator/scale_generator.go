@@ -21,14 +21,12 @@ func Scale(tonic, interval string) []string {
 }
 
 func buildScale(tonic string) []string {
-	newScale := make([]string, 0)
-
 	scale := getScale(tonic)
 	start := myScale(scale).findTonic(toUpper(tonic))
-	for i := range scale {
-		newScale = append(newScale, scale[(start+i)%len(scale)])
-	}
-	return newScale
+
+	newScale := make([]string, 0)
+	newScale = append(newScale, scale[start:]...)
+	return append(newScale, scale[:start]...)
 }
 
 func (scale myScale) applyInterval(interval string) []string {
