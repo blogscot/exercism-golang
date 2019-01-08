@@ -2,7 +2,7 @@ package etl
 
 import "strings"
 
-// Transform transform legacy data into new data
+// Transform transforms legacy data into new data
 func Transform(legacy map[int][]string) map[string]int {
 	out := make(map[string]int)
 
