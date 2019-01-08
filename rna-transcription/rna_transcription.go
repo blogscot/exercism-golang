@@ -1,9 +1,7 @@
 package strand
 
 // ToRNA creates the RNA complment foa a given DNA strand
-func ToRNA(dna string) string {
-	var complement string
-
+func ToRNA(dna string) (complement string) {
 	for _, rna := range dna {
 
 		switch rna {
@@ -17,5 +15,5 @@ func ToRNA(dna string) string {
 			complement += string('U')
 		}
 	}
-	return complement
+	return
 }
