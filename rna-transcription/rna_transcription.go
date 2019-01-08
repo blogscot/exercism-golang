@@ -1,19 +1,22 @@
 package strand
 
-// ToRNA creates the RNA complment foa a given DNA strand
-func ToRNA(dna string) (complement string) {
-	for _, rna := range dna {
+import "strings"
 
-		switch rna {
-		case 'C':
-			complement += string('G')
-		case 'G':
-			complement += string('C')
-		case 'T':
-			complement += string('A')
-		case 'A':
-			complement += string('U')
-		}
+// ToRNA creates the RNA complment for a given DNA strand
+func ToRNA(dna string) string {
+	return strings.Map(transcribe, dna)
+}
+
+func transcribe(r rune) rune {
+	switch r {
+	case 'G':
+		return 'C'
+	case 'C':
+		return 'G'
+	case 'T':
+		return 'A'
+	case 'A':
+		return 'U'
 	}
-	return
+	return r
 }
