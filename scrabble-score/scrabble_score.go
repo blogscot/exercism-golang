@@ -4,16 +4,15 @@ package scrabble
 import "unicode"
 
 // Score calculates the scrabble value for the given word
-func Score(word string) int {
-	total := 0
+func Score(word string) (total int) {
 	for _, letter := range word {
-		total += scoreLetter(unicode.ToUpper(letter))
+		total += scoreLetter(letter)
 	}
-	return total
+	return
 }
 
 func scoreLetter(letter rune) int {
-	switch letter {
+	switch unicode.ToUpper(letter) {
 	case 'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T':
 		return 1
 	case 'D', 'G':
