@@ -8,21 +8,19 @@ type predFunc func(int) bool
 type unaryFunc func(int) int
 
 // Foldl iterates the given function over a list starting from the left
-func (list IntList) Foldl(f binFunc, init int) (acc int) {
-	acc = init
+func (list IntList) Foldl(f binFunc, acc int) int {
 	for _, v := range list {
 		acc = f(acc, v)
 	}
-	return
+	return acc
 }
 
 // Foldr iterates the given function over a list starting from the right
-func (list IntList) Foldr(f binFunc, init int) (acc int) {
-	acc = init
+func (list IntList) Foldr(f binFunc, acc int) int {
 	for _, v := range list.Reverse() {
 		acc = f(v, acc)
 	}
-	return
+	return acc
 }
 
 // Filter retains list elements that meet the given predicate
@@ -40,20 +38,15 @@ func (list IntList) Filter(pred predFunc) (out IntList) {
 
 // Length calculates the length of the given list
 func (list IntList) Length() int {
-	return list.Foldl(func(acc, _ int) int {
-		return acc + 1
-	}, 0)
+	return len(list)
 }
 
 // Map iterates the given function over a list
-func (list IntList) Map(f unaryFunc) (out IntList) {
-	if len(list) == 0 {
-		return list
+func (list IntList) Map(f unaryFunc) IntList {
+	for i := range list {
+		list[i] = f(list[i])
 	}
-	for _, v := range list {
-		out = append(out, f(v))
-	}
-	return
+	return list
 
 }
 
@@ -72,10 +65,9 @@ func (list IntList) Append(other IntList) IntList {
 }
 
 // Concat concats the given arguments to a list
-func (list IntList) Concat(args []IntList) (out IntList) {
-	out = list
+func (list IntList) Concat(args []IntList) IntList {
 	for _, arg := range args {
-		out = out.Append(arg)
+		list = list.Append(arg)
 	}
-	return
+	return list
 }
