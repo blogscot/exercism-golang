@@ -3,10 +3,9 @@ package dna
 import "errors"
 
 // Histogram is a mapping from nucleotide to its count in given DNA.
-// Choose a suitable data type.
 type Histogram map[rune]int
 
-// DNA is a list of nucleotides. Choose a suitable data type.
+// DNA is a list of nucleotides.
 type DNA string
 
 // Counts generates a histogram of valid nucleotides in the given DNA.
