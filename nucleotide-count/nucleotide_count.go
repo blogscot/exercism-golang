@@ -12,7 +12,7 @@ type DNA string
 // Counts generates a histogram of valid nucleotides in the given DNA.
 // Returns an error if d contains an invalid nucleotide.
 func (d DNA) Counts() (Histogram, error) {
-	var h Histogram = map[rune]int{
+	var h = Histogram{
 		'A': 0,
 		'C': 0,
 		'G': 0,
@@ -23,7 +23,7 @@ func (d DNA) Counts() (Histogram, error) {
 		if val, ok := h[r]; ok {
 			h[r] = val + 1
 		} else {
-			return map[rune]int{}, errors.New("found invalid nucleotide")
+			return Histogram{}, errors.New("found invalid nucleotide")
 		}
 	}
 
