@@ -15,6 +15,7 @@ const (
 )
 
 func lengthOfMonth(year int, month time.Month) int {
+	// Get date of 0th day in next month
 	date := time.Date(year, month+1, 0, 0, 0, 0, 0, time.UTC)
 	return date.Day()
 }
