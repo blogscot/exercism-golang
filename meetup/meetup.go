@@ -20,7 +20,7 @@ func lengthOfMonth(year int, month time.Month) int {
 	return date.Day()
 }
 
-// Day is
+// Day determines the meetup date given the week schedule, weekday, month and year
 func Day(schedule WeekSchedule, weekday time.Weekday, month time.Month, year int) int {
 	var day int
 
