@@ -2,20 +2,24 @@
 package isogram
 
 import (
-	"regexp"
 	"unicode"
 )
 
 // IsIsogram determines if a word or phrase is an isogram
 func IsIsogram(text string) bool {
-	re, _ := regexp.Compile("([- ])")
-	letters := re.ReplaceAllString(text, "")
+	lettersFound := map[rune]bool{}
 
-	lettersSet := map[rune]rune{}
+	for _, letter := range text {
+		if letter == ' ' || letter == '-' {
+			continue
+		}
 
-	for _, letter := range letters {
-		lettersSet[unicode.ToLower(letter)] = letter
+		lowercaseLetter := unicode.ToLower(letter)
+
+		if lettersFound[lowercaseLetter] {
+			return false
+		}
+		lettersFound[lowercaseLetter] = true
 	}
-
-	return len(letters) == len(lettersSet)
+	return true
 }
