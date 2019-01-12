@@ -47,6 +47,14 @@ func searchFile(pattern string, flags []string, filename string) []string {
 	var matches = []string{}
 	invertDecorator := invert(flags)
 
+	var prefixLineNumbers = func(flags []string) {
+		if contains(flags, "-n") {
+			matches = append(matches, fmt.Sprintf("%d:%s", lineNumber, line))
+		} else {
+			matches = append(matches, line)
+		}
+	}
+
 	for scanner.Scan() {
 		line = scanner.Text()
 		lineNumber++
@@ -60,18 +68,10 @@ func searchFile(pattern string, flags []string, filename string) []string {
 
 		if contains(flags, "-x") {
 			if invertDecorator(newLine == newPattern) {
-				if contains(flags, "-n") {
-					matches = append(matches, fmt.Sprintf("%d:%s", lineNumber, line))
-				} else {
-					matches = append(matches, line)
-				}
+				prefixLineNumbers(flags)
 			}
 		} else if invertDecorator(strings.Contains(newLine, newPattern)) {
-			if contains(flags, "-n") {
-				matches = append(matches, fmt.Sprintf("%d:%s", lineNumber, line))
-			} else {
-				matches = append(matches, line)
-			}
+			prefixLineNumbers(flags)
 		}
 
 		if len(matches) > 0 && contains(flags, "-l") {
