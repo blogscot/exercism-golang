@@ -1,3 +1,4 @@
+// Package grep searches through files for user specified patterns
 package grep
 
 import (
@@ -8,13 +9,13 @@ import (
 	"strings"
 )
 
-// Search examines one or more files looking for a matching pattern
+// Search examines one or more files looking for a matching pattern.
 // Possible flags are:
-// - `-i` Match lines using a case-insensitive comparison.
-// - `-x` Only match entire lines.
-// - `-n` Include line numbers.
-// - `-l` Print only the names of files that contain at least one match.
-// - `-v` Collect all lines that DO NOT match the pattern.
+// `-i` Match lines using a case-insensitive comparison.
+// `-x` Only match entire lines.
+// `-n` Include line numbers.
+// `-l` Print only the names of files that contain at least one match.
+// `-v` Collect all lines that DO NOT match the pattern.
 func Search(pattern string, flags, files []string) []string {
 	var out = []string{}
 
