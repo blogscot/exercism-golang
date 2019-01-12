@@ -47,10 +47,9 @@ func searchFile(pattern string, flags []string, filename string) []string {
 
 	var updateMatches = func() {
 		if contains(flags, "-n") {
-			matches = append(matches, fmt.Sprintf("%d:%s", lineNumber, line))
-		} else {
-			matches = append(matches, line)
+			line = fmt.Sprintf("%d:%s", lineNumber, line)
 		}
+		matches = append(matches, line)
 	}
 
 	for scanner.Scan() {
