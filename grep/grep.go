@@ -15,7 +15,8 @@ import (
 // - `-n` Include line numbers.
 // - `-l` Print only the names of files that contain at least one match.
 // - `-v` Collect all lines that DO NOT match the pattern.
-func Search(pattern string, flags, files []string) (out []string) {
+func Search(pattern string, flags, files []string) []string {
+	var out = []string{}
 
 	for _, file := range files {
 		if found := searchFile(pattern, flags, file); len(found) != 0 {
@@ -27,10 +28,7 @@ func Search(pattern string, flags, files []string) (out []string) {
 			out = append(out, found...)
 		}
 	}
-	if len(out) == 0 {
-		return []string{}
-	}
-	return
+	return out
 }
 
 func searchFile(pattern string, flags []string, filename string) []string {
