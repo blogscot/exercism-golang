@@ -21,7 +21,7 @@ func Search(pattern string, flags, files []string) []string {
 
 	for _, file := range files {
 		if found := searchFile(pattern, flags, file); len(found) != 0 {
-			if len(files) > 1 && !contains(flags, "-l") {
+			if len(files) > 1 && !useFilenames(flags) {
 				for i := range found {
 					found[i] = fmt.Sprintf("%s:%s", file, found[i])
 				}
@@ -44,7 +44,9 @@ func searchFile(pattern string, flags []string, filename string) []string {
 	var line string
 	var lineNumber int
 	var matches = []string{}
-	invertDecorator := invert(flags)
+	invertDecorator := invertIf(contains(flags, "-v"))
+	matchWholeLine := contains(flags, "-x")
+	ignoreCase := contains(flags, "-i")
 
 	var updateMatches = func() {
 		if contains(flags, "-n") {
@@ -59,12 +61,12 @@ func searchFile(pattern string, flags []string, filename string) []string {
 		var newLine = line
 		var newPattern = pattern
 
-		if contains(flags, "-i") {
+		if ignoreCase {
 			newLine = strings.ToLower(line)
 			newPattern = strings.ToLower(pattern)
 		}
 
-		if contains(flags, "-x") {
+		if matchWholeLine {
 			if invertDecorator(newLine == newPattern) {
 				updateMatches()
 			}
@@ -72,15 +74,15 @@ func searchFile(pattern string, flags []string, filename string) []string {
 			updateMatches()
 		}
 
-		if len(matches) > 0 && contains(flags, "-l") {
+		if len(matches) > 0 && useFilenames(flags) {
 			return []string{filename}
 		}
 	}
 	return matches
 }
 
-func invert(flags []string) func(bool) bool {
-	if contains(flags, "-v") {
+func invertIf(invertFlagSet bool) func(bool) bool {
+	if invertFlagSet {
 		return func(pred bool) bool {
 			return !pred
 		}
@@ -88,6 +90,10 @@ func invert(flags []string) func(bool) bool {
 	return func(pred bool) bool {
 		return pred
 	}
+}
+
+func useFilenames(flags []string) bool {
+	return contains(flags, "-l")
 }
 
 func contains(flags []string, item string) bool {
