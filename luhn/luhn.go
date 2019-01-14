@@ -18,19 +18,20 @@ func Valid(number string) bool {
 		return false
 	}
 
-	digits := toIntArray(reverse(filtered))
+	total := 0
 
-	for index := 0; index < len(digits); index++ {
+	for index, r := range reverse(filtered) {
+		digit := int(r - '0')
 		if index&1 == 1 {
-			doubled := digits[index] * 2
-			if doubled > 9 {
-				doubled -= 9
+			digit = digit * 2
+			if digit > 9 {
+				digit -= 9
 			}
-			digits[index] = doubled
 		}
+		total += digit
 	}
 
-	return sum(digits)%10 == 0
+	return total%10 == 0
 }
 
 func allDigits(number string) bool {
@@ -45,18 +46,4 @@ func reverse(s string) string {
 		chars[i], chars[j] = chars[j], chars[i]
 	}
 	return string(chars)
-}
-
-func sum(nums []int) (total int) {
-	for _, num := range nums {
-		total += num
-	}
-	return
-}
-
-func toIntArray(number string) (digits []int) {
-	for _, r := range number {
-		digits = append(digits, int(r-'0'))
-	}
-	return
 }
