@@ -20,9 +20,9 @@ func Valid(number string) bool {
 
 	total := 0
 
-	for index, r := range reverse(filtered) {
+	for index, r := range filtered {
 		digit := int(r - '0')
-		if index&1 == 1 {
+		if (len(filtered)-1-index)&1 == 1 {
 			digit = digit * 2
 			if digit > 9 {
 				digit -= 9
@@ -38,12 +38,4 @@ func allDigits(number string) bool {
 	return strings.IndexFunc(number, func(r rune) bool {
 		return !unicode.IsNumber(r)
 	}) == -1
-}
-
-func reverse(s string) string {
-	chars := []rune(s)
-	for i, j := 0, len(chars)-1; i < j; i, j = i+1, j-1 {
-		chars[i], chars[j] = chars[j], chars[i]
-	}
-	return string(chars)
 }
