@@ -2,7 +2,7 @@ package summultiples
 
 // SumMultiples calculates the sum of all the unique multiples
 // of the divisors below the limit.
-func SumMultiples(limit int, divisors ...int) int {
+func SumMultiples(limit int, divisors ...int) (total int) {
 	multiples := make(map[int]struct{})
 
 	for _, divisor := range divisors {
@@ -10,21 +10,11 @@ func SumMultiples(limit int, divisors ...int) int {
 			continue
 		}
 		for index := divisor; index < limit; index += divisor {
-			multiples[index] = struct{}{}
+			if _, ok := multiples[index]; !ok {
+				multiples[index] = struct{}{}
+				total += index
+			}
 		}
-	}
-
-	keys := make([]int, 0, len(multiples))
-
-	for key := range multiples {
-		keys = append(keys, key)
-	}
-	return sum(keys)
-}
-
-func sum(nums []int) (total int) {
-	for _, num := range nums {
-		total += num
 	}
 	return
 }
