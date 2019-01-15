@@ -6,8 +6,8 @@ import (
 
 // Valid determines if a number is a valid Luhn number
 func Valid(number string) bool {
-	total := 0
-	count := 0
+	var total int
+	var count int
 
 	for index := len(number) - 1; index >= 0; index-- {
 		r := rune(number[index])
