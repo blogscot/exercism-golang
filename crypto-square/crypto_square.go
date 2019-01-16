@@ -11,8 +11,8 @@ import (
 func Encode(text string) string {
 	input := normalise(text)
 
-	chunks := chunkLine(input)
 	numCols, numRows := getDimensions(len(input))
+	chunks := chunk(input, numCols)
 
 	var line bytes.Buffer
 	var out []string
@@ -28,8 +28,7 @@ func Encode(text string) string {
 	return strings.Join(out, " ")
 }
 
-func chunkLine(input string) (out [][]rune) {
-	size, _ := getDimensions(len(input))
+func chunk(input string, size int) (out [][]rune) {
 
 	for len(input) > 0 {
 		if len(input) > size {
