@@ -1,6 +1,7 @@
 package cryptosquare
 
 import (
+	"bytes"
 	"math"
 	"strings"
 	"unicode"
@@ -13,15 +14,15 @@ func Encode(text string) string {
 	chunks := chunkLine(input)
 	numCols, numRows := getDimensions(len(input))
 
-	var line string
+	var line bytes.Buffer
 	var out []string
 
 	for colIndex := 0; colIndex < numCols; colIndex++ {
 		for rowIndex := 0; rowIndex < numRows; rowIndex++ {
-			line += string(chunks[rowIndex][colIndex])
+			line.WriteString(string(chunks[rowIndex][colIndex]))
 		}
-		out = append(out, line)
-		line = ""
+		out = append(out, line.String())
+		line.Reset()
 	}
 
 	return strings.Join(out, " ")
