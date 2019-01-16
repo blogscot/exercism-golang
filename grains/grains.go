@@ -14,7 +14,7 @@ func Square(num int) (uint64, error) {
 	if num <= 0 || num > maxSquares {
 		return 0, fmt.Errorf("invalid square: %d", num)
 	}
-	return (uint64(1) << uint64(num-1)), nil
+	return uint64(1) << uint64(num-1), nil
 }
 
 // Total calculates the total number of grains on a chessboard.
