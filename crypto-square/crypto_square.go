@@ -11,38 +11,22 @@ import (
 func Encode(text string) string {
 	input := normalise(text)
 
-	numCols, numRows := getDimensions(len(input))
-	chunks := chunk(input, numCols)
-
+	cols, rows := getDimensions(len(input))
 	var line bytes.Buffer
-	var out []string
 
-	for colIndex := 0; colIndex < numCols; colIndex++ {
-		for rowIndex := 0; rowIndex < numRows; rowIndex++ {
-			line.WriteString(string(chunks[rowIndex][colIndex]))
+	for i := 0; i < cols; i++ {
+		if i != 0 {
+			line.WriteString(" ")
 		}
-		out = append(out, line.String())
-		line.Reset()
-	}
-
-	return strings.Join(out, " ")
-}
-
-func chunk(input string, size int) (out [][]rune) {
-
-	for len(input) > 0 {
-		if len(input) > size {
-			out = append(out, []rune(input[:size]))
-			input = input[size:]
-		} else {
-			for len(input) < size {
-				input += " "
+		for j := 0; i+j < cols*rows; j += cols {
+			if i+j < len(input) {
+				line.WriteString(string(input[i+j]))
+			} else {
+				line.WriteString(" ")
 			}
-			out = append(out, []rune(input))
-			input = ""
 		}
 	}
-	return
+	return line.String()
 }
 
 func normalise(input string) string {
@@ -56,11 +40,12 @@ func normalise(input string) string {
 
 func getDimensions(length int) (int, int) {
 	a := int(math.Sqrt(float64(length)))
-	if a*a == length {
+	switch {
+	case a*a == length:
 		return a, a
-	}
-	if (a+1)*a >= length {
+	case (a+1)*a >= length:
 		return a + 1, a
+	default:
+		return a + 1, a + 1
 	}
-	return a + 1, a + 1
 }
