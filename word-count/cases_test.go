@@ -1,5 +1,7 @@
 package wordcount
 
+import "testing"
+
 // Source: exercism/problem-specifications
 // Commit: 77623ec word-count: Use camel-case for property name word-count: remove newline from eof
 // Problem Specifications Version: 1.2.0
@@ -64,4 +66,10 @@ var testCases = []struct {
 		" multiple   whitespaces",
 		Frequency{"multiple": 1, "whitespaces": 1},
 	},
+}
+
+func BenchmarkEncode(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		WordCount("First: don't laugh. Then: don't cry.")
+	}
 }
