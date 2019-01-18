@@ -18,11 +18,6 @@ func Square(num int) (uint64, error) {
 }
 
 // Total calculates the total number of grains on a chessboard.
-func Total() (total uint64) {
-	for square := 1; square <= maxSquares; square++ {
-		if count, err := Square(square); err == nil {
-			total += count
-		}
-	}
-	return
+func Total() uint64 {
+	return 1<<64 - 1
 }
