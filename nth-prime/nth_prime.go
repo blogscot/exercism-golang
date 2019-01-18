@@ -1,30 +1,30 @@
 package prime
 
+import "math"
+
 // Nth returns the nth prime number.
 func Nth(nth int) (int, bool) {
 	if nth == 0 {
 		return 0, false
 	}
-	if nth == 1 {
-		return 2, true
-	}
+	num := 1
 
-	primes := []int{2}
-	num := 2
-
-	for count := 1; count < nth; {
+	for count := 0; count < nth; {
 		num++
-		if isPrime(primes, num) {
-			primes = append(primes, num)
+		if isPrime(num) {
 			count++
 		}
 	}
 	return num, true
 }
 
-func isPrime(currentPrimes []int, num int) bool {
-	for _, prime := range currentPrimes {
-		if num%prime == 0 {
+func isPrime(num int) bool {
+	if num%2 == 0 {
+		return num == 2
+	}
+	limit := int(math.Sqrt(float64(num))) + 1
+	for n := 3; n < limit; n += 2 {
+		if num%n == 0 {
 			return false
 		}
 	}
