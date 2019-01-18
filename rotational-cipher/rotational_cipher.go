@@ -22,13 +22,10 @@ func RotationalCipher(text string, shift int) string {
 }
 
 func translate(letter byte, amount int) byte {
-	const lowercaseA = byte('a')
-	const uppercaseA = byte('A')
+	var offset = byte('A')
 
-	switch {
-	case letter >= lowercaseA:
-		return (((letter - lowercaseA) + byte(amount)) % 26) + lowercaseA
-	default:
-		return (((letter - uppercaseA) + byte(amount)) % 26) + uppercaseA
+	if letter >= byte('a') {
+		offset = byte('a')
 	}
+	return (((letter - offset) + byte(amount)) % 26) + offset
 }
