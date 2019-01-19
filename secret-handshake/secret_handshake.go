@@ -1,33 +1,28 @@
 package secret
 
-import "sort"
+var secretNumbers = []int{1, 2, 4, 8}
+var secretGestures = []string{"wink", "double blink", "close your eyes", "jump"}
 
-var secrets = map[int]string{
-	1: "wink",
-	2: "double blink",
-	4: "close your eyes",
-	8: "jump",
-}
+const reverse = 16
 
 // Handshake converts a number into a list of secrets.
 func Handshake(number uint) (out []string) {
 	num := int(number)
 	out = []string{}
 
-	keys := []int{}
-	for k := range secrets {
-		keys = append(keys, int(k))
+	var test = func(key int) {
+		if num&secretNumbers[key] > 0 {
+			out = append(out, secretGestures[key])
+		}
 	}
 
-	if num&16 > 0 {
-		sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+	if num&reverse > 0 {
+		for key := len(secretGestures) - 1; key >= 0; key-- {
+			test(key)
+		}
 	} else {
-		sort.Ints(keys)
-	}
-
-	for _, key := range keys {
-		if num&key > 0 {
-			out = append(out, secrets[key])
+		for key := 0; key < len(secretGestures); key++ {
+			test(key)
 		}
 	}
 	return
