@@ -1,26 +1,20 @@
 package sieve
 
-import "math"
-
 // Sieve finds all the primes up to the given number.
-func Sieve(num int) (primes []int) {
-	for n := 2; n <= num; n++ {
-		if isPrime(n) {
-			primes = append(primes, n)
-		}
+func Sieve(num int) []int {
+	if num < 2 {
+		return []int{}
 	}
-	return
-}
+	grid := make([]bool, num+1)
+	primes := []int{2}
 
-func isPrime(num int) bool {
-	if num%2 == 0 {
-		return num == 2
-	}
-	limit := int(math.Sqrt(float64(num)))
-	for n := 3; n <= limit; n += 2 {
-		if num%n == 0 {
-			return false
+	for square := 3; square <= num; square += 2 {
+		if !grid[square] {
+			primes = append(primes, square)
+			for index := square * square; index <= num; index += square {
+				grid[index] = true
+			}
 		}
 	}
-	return true
+	return primes
 }
