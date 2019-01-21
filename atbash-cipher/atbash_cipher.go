@@ -6,9 +6,10 @@ import (
 	"unicode"
 )
 
-// Atbash encrypts the text using an ancient encription system.
+// Atbash encrypts the text using an ancient encryption system.
 func Atbash(text string) string {
 	text = strings.Map(translate, strings.ToLower(text))
+	textLength := len(text)
 	var buf bytes.Buffer
 	var count int
 
@@ -16,7 +17,7 @@ func Atbash(text string) string {
 		buf.WriteString(string(r))
 
 		count = index + 1
-		if (index+1)%5 == 0 && (count != len(text)) {
+		if count%5 == 0 && count != textLength {
 			buf.WriteString(" ")
 		}
 	}
