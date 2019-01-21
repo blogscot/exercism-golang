@@ -1,7 +1,6 @@
 package atbash
 
 import (
-	"bytes"
 	"strings"
 	"unicode"
 )
@@ -10,18 +9,18 @@ import (
 func Atbash(text string) string {
 	text = strings.Map(translate, strings.ToLower(text))
 	textLength := len(text)
-	var buf bytes.Buffer
+	buf := make([]byte, 0)
 	var count int
 
-	for index, r := range text {
-		buf.WriteString(string(r))
+	for index, r := range []byte(text) {
+		buf = append(buf, r)
 
 		count = index + 1
 		if count%5 == 0 && count != textLength {
-			buf.WriteString(" ")
+			buf = append(buf, ' ')
 		}
 	}
-	return buf.String()
+	return string(buf)
 }
 
 func translate(r rune) rune {
@@ -31,6 +30,6 @@ func translate(r rune) rune {
 	case unicode.IsDigit(r):
 		return r
 	default:
-		return rune(byte('z') - (byte(r) - byte('a')))
+		return 'z' - (r - 'a')
 	}
 }
